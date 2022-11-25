@@ -9,6 +9,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import avatar from '../../public/data/avatar.jpg';
 import { Cart, Chat, Notification, UserProfile } from '../';
 import Image from 'next/image';
+import { contextType } from './../../context/contextProvider';
 
 type NavButtonProps = {
     title: string,
@@ -37,10 +38,12 @@ const NavButton = ({title, customeFunc, icon, color, dotColor}: NavButtonProps) 
 }
 
 const Navbar = () => {
-    const {activeMenu, setActiveMenu, isClicked, handleClick, screenSize, setScreenSize} = useStateContext();
+    const context = useStateContext();
+    
+    // const {activeMenu, setActiveMenu, isClicked, handleClick, screenSize, setScreenSize} = context;
     
     useEffect(() => {
-        const handeScreenSize = () => setScreenSize(window.innerWidth);
+        const handeScreenSize = () => context?.setScreenSize(window.innerWidth);
         
         window.addEventListener('resize', handeScreenSize)
         
@@ -50,19 +53,19 @@ const Navbar = () => {
     }, 
     []);
     useEffect(()=>{
-        if(screenSize <= 900)
-            setActiveMenu(false);
+        if(context?.screenSize <= 900)
+        context?.setActiveMenu(false);
         else
-            setActiveMenu(true);
-    }, [screenSize]);
+        context?.setActiveMenu(true);
+    }, [context?.screenSize]);
     return (
-        <div className={`dark:bg-main-bg bg-main-bg min-h-screen w-full ${activeMenu ? "md:ml-72" : "flex-2"}`}>
+        <div className={`dark:bg-main-bg bg-main-bg min-h-screen w-full ${context?.activeMenu ? "md:ml-72" : "flex-2"}`}>
             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
                 <div className="flex justify-between p-2 md:mx-6 relative">
                     <div className='flex'>
                         <NavButton 
                             title="Menu" 
-                            customeFunc={()=> {setActiveMenu((prevActive) => !prevActive)}} 
+                            customeFunc={()=> {context?.setActiveMenu((prevActive: any) => !prevActive)}} 
                             icon={<AiOutlineMenu />}
                             color="blue"
                             dotColor=""
@@ -70,13 +73,13 @@ const Navbar = () => {
                         
                     </div >
                     <div className="flex">
-                        <NavButton title="Cart" customeFunc={() => {handleClick('cart')}} color={'blue'} icon={<FiShoppingCart />} />
-                        <NavButton title="Chat" dotColor="#03C9D7" customeFunc={() => {handleClick('chat')}} color={'blue'} icon={<BsChatLeft />} />
-                        <NavButton title="Notification" dotColor="rgb(254, 201, 15)" customeFunc={() => {handleClick('notification')}} color={'blue'} icon={<RiNotification3Line />} />
+                        <NavButton title="Cart" customeFunc={() => {context?.handleClick('cart')}} color={'blue'} icon={<FiShoppingCart />} />
+                        <NavButton title="Chat" dotColor="#03C9D7" customeFunc={() => {context?.handleClick('chat')}} color={'blue'} icon={<BsChatLeft />} />
+                        <NavButton title="Notification" dotColor="rgb(254, 201, 15)" customeFunc={() => {context?.handleClick('notification')}} color={'blue'} icon={<RiNotification3Line />} />
                         <TooltipComponent content="Profile" position="BottomCenter">
                             <div
                                 className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
-                                onClick={() => {handleClick('userProfile')}}
+                                onClick={() => {context?.handleClick('userProfile')}}
                             >
                                 <Image
                                     className="rounded-full w-8 h-8"
@@ -93,10 +96,10 @@ const Navbar = () => {
                             </div>
                         </TooltipComponent>
 
-                        {isClicked.cart && <Cart/> }
-                        {isClicked.chat && <Chat/> }
-                        {isClicked.userProfile && <UserProfile/> }
-                        {isClicked.notification && <Notification/> }
+                        {context?.isClicked.cart && <Cart/> }
+                        {context?.isClicked.chat && <Chat/> }
+                        {context?.isClicked.userProfile && <UserProfile/> }
+                        {context?.isClicked.notification && <Notification/> }
                     </div>
                 </div>
             </div>

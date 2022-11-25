@@ -7,11 +7,11 @@ type PropsType = {
     children?: React.ReactNode;
 }
 const Layout = ({children}:PropsType) => {
-    const {activeMenu} = useStateContext();
+    const context = useStateContext();
     return (
         <div className="flex relative dark:bg-main-dark-bg">
             <Tooltip/>
-            {activeMenu
+            {context?.activeMenu
             ?<div className="w-72 fixed sidebar dark:bg-secondry-dark-bg bg-white" style={{zIndex: '10000'}}><Sidebar/></div>
             :<div className="w-0"><Sidebar /></div> }
             

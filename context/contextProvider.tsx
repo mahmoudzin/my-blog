@@ -2,25 +2,27 @@ import React, {createContext, useContext, useState} from 'react';
 
 
 interface IState{
-    chat: boolean,
-    cart: boolean,
-    notification: boolean,
-    userProfile: boolean,
+    'chat': boolean,
+    'cart': boolean,
+    'notification': boolean,
+    'userProfile': boolean,
 }
 
-interface contextType {
+export interface contextType {
     activeMenu: boolean,
-    isActive: IState,
-    setActiveMenu(): void,
+    isClicked: IState | {[key:string]: boolean},
+    setActiveMenu(a:boolean | Function): void,
     handleClick(clicked:string): void,
-    screenSize: undefined | number
+    screenSize: number
+    setScreenSize(x:number):void
 }
-const initialState: IState = {
+const initialState:{[key:string]: boolean} | IState = {
     chat: false,
     cart: false,
     notification: false,
     userProfile: false,
 }
+
 export const StateContext = createContext<contextType | null>(null);
 
 type ContextProviderProps = {
@@ -29,8 +31,8 @@ type ContextProviderProps = {
 
 const ContextProvider = ({children}: ContextProviderProps)=>  {
     const [activeMenu, setActiveMenu] = useState<boolean>(true);
-    const [isClicked, setIsClicked] = useState<IState>(initialState);
-    const [screenSize, setScreenSize] = useState<undefined | number>(undefined)
+    const [isClicked, setIsClicked] = useState<{[key:string]: boolean} | IState>(initialState);
+    const [screenSize, setScreenSize] = useState<number>(0)
     const handleClick = (clicked:string) => setIsClicked({ ...initialState, [clicked]: !isClicked[clicked] });
 
     return (
