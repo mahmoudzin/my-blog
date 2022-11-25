@@ -16,7 +16,7 @@ export interface contextType {
     screenSize: number
     setScreenSize(x:number):void
 }
-const initialState:{[key:string]: boolean} | IState = {
+const initialState:{[key:string]: boolean}  = {
     chat: false,
     cart: false,
     notification: false,
@@ -31,9 +31,9 @@ type ContextProviderProps = {
 
 const ContextProvider = ({children}: ContextProviderProps)=>  {
     const [activeMenu, setActiveMenu] = useState<boolean>(true);
-    const [isClicked, setIsClicked] = useState<{[key:string]: boolean} | IState>(initialState);
+    const [isClicked, setIsClicked] = useState<{[key:string]: boolean}>(initialState);
     const [screenSize, setScreenSize] = useState<number>(0)
-    const handleClick = (clicked:string) => setIsClicked({ ...initialState, [clicked]: !isClicked[clicked] });
+    const handleClick = (clicked:any) => setIsClicked({ ...initialState, [clicked]: !isClicked[clicked] });
 
     return (
         <StateContext.Provider value={{activeMenu, setActiveMenu, isClicked, handleClick, screenSize, setScreenSize}}>

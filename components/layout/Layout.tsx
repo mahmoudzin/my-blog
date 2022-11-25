@@ -16,7 +16,7 @@ const Layout = ({children}:PropsType) => {
             :<div className="w-0"><Sidebar /></div> }
             
             <Navbar />
-            <div className={`dark:bg-main-bg bg-main-bg min-h-screen w-full ${activeMenu ? "md:ml-72" : "flex-2"}`}>
+            <div className={`dark:bg-main-bg bg-main-bg min-h-screen w-full ${context?.activeMenu ? "md:ml-72" : "flex-2"}`}>
                 {children}
             </div>
         </div>

@@ -9,15 +9,16 @@ import NavLink from './../NavLink';
 import {useStateContext} from '../../context/contextProvider'
 
 const Sidebar = () => {
-    const {activeMenu, setActiveMenu, screenSize} = useStateContext();
+    const context = useStateContext();
+    
     const handleCloseSidebar = () => {
-        if(screenSize <= 900 && activeMenu){
-            setActiveMenu(false);
+        if(context?.screenSize && context?.screenSize <= 900 && context?.activeMenu){
+            context?.setActiveMenu(false);
         }
     }
     return (
             <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10" >
-                {activeMenu 
+                {context?.activeMenu 
                 && 
                 <>
                     <div className="flex justify-between items-center">
@@ -33,7 +34,7 @@ const Sidebar = () => {
                             <button 
                                 className="md:hidden text-xl p-3 rounded-full hover:bg-light-gray mt-4 block" 
                                 type="button" 
-                                onClick={()=> setActiveMenu(false)}
+                                onClick={()=> context?.setActiveMenu(false)}
                             >
                                 <MdOutlineCancel/>
                             </button>
