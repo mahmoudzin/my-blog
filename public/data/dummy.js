@@ -556,17 +556,17 @@ export const links = [
         icon: <RiStockLine />,
       },
       {
-        href: 'charts/color-mapping',
+        href: '/charts/color-mapping',
         name: 'color-mapping',
         icon: <BsBarChart />,
       },
       {
-        href: 'charts/pyramid',
+        href: '/charts/pyramid',
         name: 'pyramid',
         icon: <GiLouvrePyramid />,
       },
       {
-        href: 'charts/stacked',
+        href: '/charts/stacked',
         name: 'stacked',
         icon: <AiOutlineBarChart />,
       },
